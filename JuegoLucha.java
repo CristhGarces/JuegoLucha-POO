@@ -43,6 +43,10 @@ abstract class Personaje {
     public int getPuntosDeVida() {
         return this.puntosDeVida;
     }
+
+    public String getTipo() {
+        return getClass().getSimpleName();
+    }
 }
 
 
@@ -129,6 +133,11 @@ abstract class PersonajeDecorator extends Personaje {
     public int getPuntosDeVida() {
         return personajeDecorado.getPuntosDeVida();
     }
+
+    @Override
+    public String getTipo() {
+        return personajeDecorado.getTipo();
+    }
 }
 
 // Armadura: reduce el dano recibido en un 20%
@@ -214,9 +223,9 @@ class JuegoLucha {
         System.out.println("\n======================================");
         System.out.println("    COMIENZA LA BATALLA  ");
         System.out.println("  " + jugador1.getNombre()
-                + " [" + jugador1.getClass().getSimpleName() + "] "
+                + " [" + jugador1.getTipo() + "] "
                 + "vs " + jugador2.getNombre()
-                + " [" + jugador2.getClass().getSimpleName() + "]");
+                + " [" + jugador2.getTipo() + "]");
         System.out.println("======================================\n");
 
         int ronda = 1;

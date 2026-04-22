@@ -44,6 +44,106 @@ java JuegoLucha
 - `ArmaduraDecorator`, `FuriaDecorator` - Decorators concretos
 - `JuegoLucha` - Clase principal con el metodo main
 
+## Diagrama de Clases
+
+```mermaid
+classDiagram
+    direction TB
+
+    class Personaje {
+        <<abstract>>
+        -String nombre
+        -int puntosDeVida
+        +int MIN_DANO
+        +int MAX_DANO
+        +Personaje(nombre: String, hp: int, min: int, max: int)
+        +atacar(oponente: Personaje) void
+        +recibirDano(dano: int) void
+        +estaVivo() boolean
+        +getNombre() String
+        +getPuntosDeVida() int
+    }
+
+    class Ninja {
+        +Ninja(nombre: String)
+        +atacar(oponente: Personaje) void
+    }
+
+    class Samurai {
+        +Samurai(nombre: String)
+        +atacar(oponente: Personaje) void
+    }
+
+    class Invocador {
+        +Invocador(nombre: String)
+        +atacar(oponente: Personaje) void
+    }
+
+    class PersonajeDecorator {
+        <<abstract>>
+        #Personaje personajeDecorado
+        +PersonajeDecorator(personaje: Personaje)
+        +atacar(oponente: Personaje) void
+        +recibirDano(dano: int) void
+        +estaVivo() boolean
+        +getPuntosDeVida() int
+    }
+
+    class ArmaduraDecorator {
+        +ArmaduraDecorator(personaje: Personaje)
+        +recibirDano(dano: int) void
+    }
+
+    class FuriaDecorator {
+        +FuriaDecorator(personaje: Personaje)
+        +atacar(oponente: Personaje) void
+    }
+
+    class PersonajeFactory {
+        <<abstract>>
+        +crearPersonaje(nombre: String) Personaje
+    }
+
+    class NinjaFactory {
+        +crearPersonaje(nombre: String) Personaje
+    }
+
+    class SamuraiFactory {
+        +crearPersonaje(nombre: String) Personaje
+    }
+
+    class InvocadorFactory {
+        +crearPersonaje(nombre: String) Personaje
+    }
+
+    class JuegoLucha {
+        -Personaje jugador1
+        -Personaje jugador2
+        +JuegoLucha(jugador1: Personaje, jugador2: Personaje)
+        +iniciarPelea() void
+        -turno(atacante: Personaje, defensor: Personaje) void
+        -obtenerFabrica(tipo: int) PersonajeFactory
+        -aplicarDecorator(personaje: Personaje, habilidad: int) Personaje
+    }
+
+    Personaje <|-- Ninja
+    Personaje <|-- Samurai
+    Personaje <|-- Invocador
+    Personaje <|-- PersonajeDecorator
+
+    PersonajeDecorator <|-- ArmaduraDecorator
+    PersonajeDecorator <|-- FuriaDecorator
+    PersonajeDecorator o-- Personaje : envuelve
+
+    PersonajeFactory <|-- NinjaFactory
+    PersonajeFactory <|-- SamuraiFactory
+    PersonajeFactory <|-- InvocadorFactory
+
+    PersonajeFactory ..> Personaje : creates
+    JuegoLucha --> Personaje : gestiona
+    JuegoLucha --> PersonajeFactory : usa
+```
+
 ## Autores
 Desarrollado como actividad academica para la materia de Programacion Orientada a Objetos.
 

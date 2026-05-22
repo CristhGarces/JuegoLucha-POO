@@ -38,6 +38,7 @@ Permite cambiar el comportamiento de ataque en tiempo de ejecución.
 
 ## Estructura del Proyecto
 
+```
 src/
 ├── main/java/com/juego/
 │   ├── model/
@@ -47,29 +48,15 @@ src/
 │   │   └── Invocador.java
 │   ├── patrones/
 │   │   ├── factory/
-│   │   │   ├── PersonajeFactory.java
-│   │   │   ├── NinjaFactory.java
-│   │   │   ├── SamuraiFactory.java
-│   │   │   └── InvocadorFactory.java
 │   │   ├── decorator/
-│   │   │   ├── PersonajeDecorator.java
-│   │   │   ├── ArmaduraDecorator.java
-│   │   │   └── FuriaDecorator.java
 │   │   └── strategy/
-│   │       ├── EstrategiaAtaque.java
-│   │       ├── AtaqueNormal.java
-│   │       ├── AtaqueCritico.java
-│   │       └── AtaqueDefensivo.java
 │   └── juego/
 │       └── JuegoLucha.java
 └── test/java/com/juego/
-├── model/
-│   └── PersonajeTest.java
-├── patrones/
-│   └── PatronesTest.java
-└── juego/
-└── JuegoLuchaTest.java
-
+    ├── model/
+    ├── patrones/
+    └── juego/
+```
 ## Pruebas Unitarias
 
 Se implementaron 27 pruebas unitarias usando JUnit 5 y Mockito con cobertura superior al 80%.

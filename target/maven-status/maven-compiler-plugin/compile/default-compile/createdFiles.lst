@@ -1,0 +1,16 @@
+com/juego/patrones/decorator/FuriaDecorator.class
+com/juego/patrones/decorator/PersonajeDecorator.class
+com/juego/model/Ninja.class
+com/juego/patrones/factory/PersonajeFactory.class
+com/juego/model/Personaje.class
+com/juego/patrones/factory/InvocadorFactory.class
+com/juego/model/Samurai.class
+com/juego/patrones/factory/SamuraiFactory.class
+com/juego/patrones/strategy/EstrategiaAtaque.class
+com/juego/juego/JuegoLucha.class
+com/juego/model/Invocador.class
+com/juego/patrones/decorator/ArmaduraDecorator.class
+com/juego/patrones/strategy/AtaqueCritico.class
+com/juego/patrones/strategy/AtaqueDefensivo.class
+com/juego/patrones/factory/NinjaFactory.class
+com/juego/patrones/strategy/AtaqueNormal.class

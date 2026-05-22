@@ -1,48 +1,105 @@
-# JuegoLucha-POO
-juego de lucha en Java implementando patrones de diseño Factory Method y Decorator
+# Juego de Lucha - Patrones de Diseño y Pruebas
 
-# Juego de Lucha - Patrones de Diseño
+![Java CI with Maven](https://github.com/CristhGarces/JuegoLucha-POO/actions/workflows/ci.yml/badge.svg)
 
-Juego de lucha por turnos desarrollado en Java, implementando los patrones de diseño **Factory Method** (creacional) y **Decorator** (estructural).
+Juego de lucha por turnos desarrollado en Java, aplicando patrones de diseño creacionales y estructurales, pruebas unitarias con JUnit 5 y Mockito, y pipeline de integración continua con GitHub Actions.
 
-## Descripcion
-
-Dos jugadores eligen un personaje y una habilidad especial. Luego se enfrentan en una batalla por turnos hasta que uno quede sin puntos de vida.
+## Integrantes
+- Cristhian Garces
+- Jhojan Carabali
+- Juan Pablo Vasquez
 
 ## Patrones de Diseño Implementados
 
-### Factory Method
-Permite crear distintos tipos de personajes (Ninja, Samurai, Invocador) sin instanciarlos directamente en la clase JuegoLucha. Cada fabrica concreta decide que objeto crear.
+### Factory Method (Creacional)
+Permite crear distintos tipos de personajes sin instanciarlos directamente. Cada fábrica concreta decide qué objeto crear.
+- `NinjaFactory` → crea un `Ninja`
+- `SamuraiFactory` → crea un `Samurai`
+- `InvocadorFactory` → crea un `Invocador`
 
-### Decorator
-Permite agregar habilidades especiales a un personaje en tiempo de ejecucion sin modificar su clase base:
-- **Armadura:** reduce el dano recibido en un 20%
-- **Furia:** aumenta el dano causado en un 20%
+### Decorator (Estructural)
+Agrega habilidades especiales a un personaje en tiempo de ejecución sin modificar su clase base.
+- `ArmaduraDecorator`: reduce el daño recibido en un 20%
+- `FuriaDecorator`: aumenta el daño causado en un 20%
+
+### Strategy (Estructural)
+Permite cambiar el comportamiento de ataque en tiempo de ejecución.
+- `AtaqueNormal`: daño estándar según el personaje
+- `AtaqueCritico`: daño aumentado un 50%
+- `AtaqueDefensivo`: daño reducido un 50%
 
 ## Personajes
 
-| Personaje | HP | Dano minimo | Dano maximo |
-|---|---|---|---|
-| Ninja | 80 | 15 | 35 |
-| Samurai | 120 | 10 | 25 |
-| Invocador | 70 | 20 | 40 |
+| Personaje  | HP  | Daño mínimo | Daño máximo |
+|------------|-----|-------------|-------------|
+| Ninja      | 80  | 15          | 35          |
+| Samurai    | 120 | 10          | 25          |
+| Invocador  | 70  | 20          | 40          |
 
-## Como ejecutar
+## Estructura del Proyecto
+
+src/
+├── main/java/com/juego/
+│   ├── model/
+│   │   ├── Personaje.java
+│   │   ├── Ninja.java
+│   │   ├── Samurai.java
+│   │   └── Invocador.java
+│   ├── patrones/
+│   │   ├── factory/
+│   │   │   ├── PersonajeFactory.java
+│   │   │   ├── NinjaFactory.java
+│   │   │   ├── SamuraiFactory.java
+│   │   │   └── InvocadorFactory.java
+│   │   ├── decorator/
+│   │   │   ├── PersonajeDecorator.java
+│   │   │   ├── ArmaduraDecorator.java
+│   │   │   └── FuriaDecorator.java
+│   │   └── strategy/
+│   │       ├── EstrategiaAtaque.java
+│   │       ├── AtaqueNormal.java
+│   │       ├── AtaqueCritico.java
+│   │       └── AtaqueDefensivo.java
+│   └── juego/
+│       └── JuegoLucha.java
+└── test/java/com/juego/
+├── model/
+│   └── PersonajeTest.java
+├── patrones/
+│   └── PatronesTest.java
+└── juego/
+└── JuegoLuchaTest.java
+
+## Pruebas Unitarias
+
+Se implementaron 27 pruebas unitarias usando JUnit 5 y Mockito con cobertura superior al 80%.
+
+| Clase de prueba   | Tests | Resultado |
+|-------------------|-------|-----------|
+| PersonajeTest     | 10    | ✅ Pasando |
+| PatronesTest      | 10    | ✅ Pasando |
+| JuegoLuchaTest    | 7     | ✅ Pasando |
+| **Total**         | **27**| ✅ **Todos pasando** |
+
+## Integración Continua
+
+El proyecto usa GitHub Actions para ejecutar automáticamente en cada push:
+1. Compilación con Maven
+2. Ejecución de pruebas
+3. Generación de reporte de cobertura JaCoCo
+
+## Cómo ejecutar
 
 ```bash
-javac JuegoLucha.java
-java JuegoLucha
+# Compilar
+mvn clean compile
+
+# Ejecutar pruebas
+mvn test
+
+# Generar reporte de cobertura
+mvn jacoco:report
 ```
-
-## Estructura del proyecto
-
-- `Personaje` - Clase base abstracta
-- `Ninja`, `Samurai`, `Invocador` - Subclases (herencia)
-- `PersonajeFactory` - Fabrica abstracta
-- `NinjaFactory`, `SamuraiFactory`, `InvocadorFactory` - Fabricas concretas
-- `PersonajeDecorator` - Decorator base abstracto
-- `ArmaduraDecorator`, `FuriaDecorator` - Decorators concretos
-- `JuegoLucha` - Clase principal con el metodo main
 
 ## Diagrama de Clases
 
@@ -56,97 +113,68 @@ classDiagram
         -int puntosDeVida
         +int MIN_DANO
         +int MAX_DANO
-        +Personaje(nombre: String, hp: int, min: int, max: int)
-        +atacar(oponente: Personaje) void
-        +recibirDano(dano: int) void
+        +atacar(oponente Personaje) void
+        +recibirDano(dano int) void
         +estaVivo() boolean
         +getNombre() String
         +getPuntosDeVida() int
+        +getMinDano() int
+        +getMaxDano() int
     }
 
-    class Ninja {
-        +Ninja(nombre: String)
-        +atacar(oponente: Personaje) void
-    }
-
-    class Samurai {
-        +Samurai(nombre: String)
-        +atacar(oponente: Personaje) void
-    }
-
-    class Invocador {
-        +Invocador(nombre: String)
-        +atacar(oponente: Personaje) void
-    }
+    class Ninja { +Ninja(nombre String) }
+    class Samurai { +Samurai(nombre String) }
+    class Invocador { +Invocador(nombre String) }
 
     class PersonajeDecorator {
         <<abstract>>
         #Personaje personajeDecorado
-        +PersonajeDecorator(personaje: Personaje)
-        +atacar(oponente: Personaje) void
-        +recibirDano(dano: int) void
-        +estaVivo() boolean
-        +getPuntosDeVida() int
     }
 
-    class ArmaduraDecorator {
-        +ArmaduraDecorator(personaje: Personaje)
-        +recibirDano(dano: int) void
-    }
-
-    class FuriaDecorator {
-        +FuriaDecorator(personaje: Personaje)
-        +atacar(oponente: Personaje) void
-    }
+    class ArmaduraDecorator { +recibirDano(dano int) void }
+    class FuriaDecorator { +atacar(oponente Personaje) void }
 
     class PersonajeFactory {
         <<abstract>>
-        +crearPersonaje(nombre: String) Personaje
+        +crearPersonaje(nombre String) Personaje
     }
 
-    class NinjaFactory {
-        +crearPersonaje(nombre: String) Personaje
+    class NinjaFactory
+    class SamuraiFactory
+    class InvocadorFactory
+
+    class EstrategiaAtaque {
+        <<interface>>
+        +ejecutarAtaque(atacante Personaje, oponente Personaje) void
     }
 
-    class SamuraiFactory {
-        +crearPersonaje(nombre: String) Personaje
-    }
-
-    class InvocadorFactory {
-        +crearPersonaje(nombre: String) Personaje
-    }
+    class AtaqueNormal
+    class AtaqueCritico
+    class AtaqueDefensivo
 
     class JuegoLucha {
         -Personaje jugador1
         -Personaje jugador2
-        +JuegoLucha(jugador1: Personaje, jugador2: Personaje)
+        -EstrategiaAtaque estrategia
         +iniciarPelea() void
-        -turno(atacante: Personaje, defensor: Personaje) void
-        -obtenerFabrica(tipo: int) PersonajeFactory
-        -aplicarDecorator(personaje: Personaje, habilidad: int) Personaje
+        +setEstrategia(e EstrategiaAtaque) void
     }
 
     Personaje <|-- Ninja
     Personaje <|-- Samurai
     Personaje <|-- Invocador
     Personaje <|-- PersonajeDecorator
-
     PersonajeDecorator <|-- ArmaduraDecorator
     PersonajeDecorator <|-- FuriaDecorator
-    PersonajeDecorator o-- Personaje : envuelve
-
+    PersonajeDecorator o-- Personaje
     PersonajeFactory <|-- NinjaFactory
     PersonajeFactory <|-- SamuraiFactory
     PersonajeFactory <|-- InvocadorFactory
-
-    PersonajeFactory ..> Personaje : creates
-    JuegoLucha --> Personaje : gestiona
-    JuegoLucha --> PersonajeFactory : usa
+    PersonajeFactory ..> Personaje
+    EstrategiaAtaque <|.. AtaqueNormal
+    EstrategiaAtaque <|.. AtaqueCritico
+    EstrategiaAtaque <|.. AtaqueDefensivo
+    JuegoLucha --> Personaje
+    JuegoLucha --> EstrategiaAtaque
+    JuegoLucha --> PersonajeFactory
 ```
-
-## Autores
-Desarrollado como actividad academica para la materia de Programacion Orientada a Objetos.
-
-- Cristhian Garces
-- Jhojan Carabali
-- Juan Pablo Vasquez
